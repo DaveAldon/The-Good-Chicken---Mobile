@@ -1,24 +1,47 @@
-import React, { useRef } from "react";
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, PanResponder, Animated } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, PanResponder, Animated, Image } from "react-native";
 import { randomColor } from "randomcolor";
 
 const boxArrays = Array.from(Array(10), () => [...Array(10).keys()]);
-const boxSize = 100;
+const boxSize = 50;
+const playerSource = require("../../assets/chicken.png");
 
-function Box() {
-  return <View style={{ backgroundColor: randomColor(), height: boxSize, width: boxSize }} />;
+interface IProps {
+  playerLocation: ILocation;
+  location: ILocation;
 }
 
-function ManyBoxes() {
+interface ILocation {
+  x: number;
+  y: number;
+}
+
+function checkSameLocation(loc1: ILocation, loc2: ILocation) {
+  return loc1.x === loc2.x && loc1.y === loc2.y;
+}
+
+function Player() {
+  return <Image style={{ resizeMode: "center", height: "100%", width: "100%" }} source={playerSource} />;
+}
+
+function Box(props: IProps) {
+  const { playerLocation, location } = props;
+  const isPlayerOnBox = checkSameLocation(playerLocation, location);
+  return <View style={{ backgroundColor: randomColor(), height: boxSize, width: boxSize }}>{isPlayerOnBox && <Player />}</View>;
+}
+
+function ManyBoxes(props: IProps) {
   return (
     <View style={{ flexDirection: "row" }}>
-      {boxArrays.map((row, index) => {
+      {boxArrays.map((row, xindex) => {
         return (
-          <View key={index} style={{ flexDirection: "column" }}>
+          <View key={xindex} style={{ flexDirection: "column" }}>
             <Text>Row</Text>
-            {row.map((box, index) => (
-              <Box key={index} />
-            ))}
+            {row.map((box, yindex) => {
+              const location = { x: xindex, y: yindex };
+              props = { ...props, location: location };
+              return <Box {...props} key={yindex} />;
+            })}
           </View>
         );
       })}
@@ -26,9 +49,10 @@ function ManyBoxes() {
   );
 }
 
-export default function GameScreen(props: any) {
+export default function GameScreen(props: IProps) {
   const pan = useRef(new Animated.ValueXY()).current;
-
+  const [playerLocation, setPlayerLocation] = useState({ x: 2, y: 3 });
+  props = { ...props, playerLocation: playerLocation };
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
@@ -54,7 +78,7 @@ export default function GameScreen(props: any) {
             transform: [{ translateX: pan.x }, { translateY: pan.y }],
           }}
           {...panResponder.panHandlers}>
-          <ManyBoxes />
+          <ManyBoxes {...props} />
         </Animated.View>
       </View>
     </View>
