@@ -10,6 +10,7 @@ import Feather from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import { createStackNavigator } from "@react-navigation/stack";
+import GameScreen from "./src/components/game";
 
 interface IProp {}
 
@@ -33,7 +34,7 @@ const App = () => {
 function DrawerContainer() {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
+      initialRouteName="Game"
       drawerType="slide"
       drawerContent={(props) => {
         // If you don't cancel the initial render, the drawer will flash on the screen
@@ -44,7 +45,8 @@ function DrawerContainer() {
         return (
           <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, flexDirection: "column", justifyContent: "space-between", paddingTop: 50 }}>
             <View style={{ flex: 1, flexDirection: "column", justifyContent: "flex-start" }}>
-              <DrawerItem labelStyle={[{}]} label="Main Menu" onPress={() => props.navigation.navigate("Home")} icon={() => <Feather name="monitor" size={30} color="black" />} />
+              <DrawerItem labelStyle={[{}]} label="Main Menu" onPress={() => props.navigation.navigate("MainMenu")} icon={() => <Feather name="monitor" size={30} color="black" />} />
+              <DrawerItem labelStyle={[{}]} label="Game" onPress={() => props.navigation.navigate("Game")} icon={() => <Feather name="monitor" size={30} color="black" />} />
               <DrawerItem
                 labelStyle={[{}]}
                 label="Logout"
@@ -58,7 +60,8 @@ function DrawerContainer() {
           </DrawerContentScrollView>
         );
       }}>
-      <Drawer.Screen name="Home">{(props: IProp) => <MainMenuScreen {...props} />}</Drawer.Screen>
+      <Drawer.Screen name="MainMenu">{(props: IProp) => <MainMenuScreen {...props} />}</Drawer.Screen>
+      <Drawer.Screen name="Game">{(props: IProp) => <GameScreen {...props} />}</Drawer.Screen>
     </Drawer.Navigator>
   );
 }
