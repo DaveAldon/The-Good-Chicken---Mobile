@@ -44,10 +44,11 @@ export default function LoginScreen(props: any) {
       },
     })
   ).current;
+
   return (
     <View>
       <Text>Banner area</Text>
-      <View style={{ height: "90%" }}>
+      <View style={{ zIndex: -10 }}>
         <Animated.View
           style={{
             transform: [{ translateX: pan.x }, { translateY: pan.y }],
