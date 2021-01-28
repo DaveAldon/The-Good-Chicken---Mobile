@@ -1,10 +1,6 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 
-const boxArrays = Array.from(Array(10), () => [...Array(10).keys()]);
-const boxSize = 50;
-const playerSource = require("../../../assets/chicken.png");
-
 interface IProps {
   playerLocation: ILocation;
   location: ILocation;
@@ -14,6 +10,10 @@ interface ILocation {
   x: number;
   y: number;
 }
+
+const boxArrays = Array.from(Array(10), () => [...Array(10).keys()]);
+const boxSize = 50;
+const playerSource = require("../../../assets/chicken.png");
 
 function checkSameLocation(loc1: ILocation, loc2: ILocation) {
   return loc1.x === loc2.x && loc1.y === loc2.y;
