@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyleSheet, View, Text, PanResponder, Animated } from "react-native";
 import BoxGrid from "./boxes";
-import Controller from "./controller";
+import { Controller, Inventory } from "./controller";
 
 interface ILocation {
   x: number;
@@ -72,8 +72,13 @@ export default function GameScreen(props: IProps) {
           <BoxGrid {...props} />
         </Animated.View>
       </View>
-      <View style={{ height: "30%" }}>
-        <Controller {...props} />
+      <View style={{ height: "30%", flexDirection: "row" }}>
+        <View style={{ width: "60%" }}>
+          <Controller {...props} />
+        </View>
+        <View style={{ width: "40%" }}>
+          <Inventory {...props} />
+        </View>
       </View>
     </View>
   );

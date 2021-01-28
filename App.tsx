@@ -61,7 +61,7 @@ function DrawerContainer() {
         );
       }}>
       <Drawer.Screen name="MainMenu">{(props: IProp) => <MainMenuScreen {...props} />}</Drawer.Screen>
-      <Drawer.Screen name="Game">{(props: IProp) => <GameScreen {...props} />}</Drawer.Screen>
+      <Drawer.Screen name="Game">{(props: any) => <GameScreen {...props} />}</Drawer.Screen>
     </Drawer.Navigator>
   );
 }
