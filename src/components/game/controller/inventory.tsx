@@ -52,8 +52,16 @@ export default function Inventory(props: any) {
 
   return (
     <View style={{ backgroundColor: "#bfbfbf", height: "100%", borderWidth: 2, flexDirection: "row", borderColor: "grey" }}>
-      <View style={{ flexDirection: "column", width: "50%", justifyContent: "space-between", padding: 5 }}>
-        <DraggableFlatList scrollEnabled={false} data={data} renderItem={renderSpell} keyExtractor={(item, index) => `draggable-item-${item.name}`} onDragEnd={({ data }) => setData(data)} />
+      <View style={{ flexDirection: "column", width: "50%", justifyContent: "space-between" }}>
+        <DraggableFlatList
+          containerStyle={{ height: 100 }}
+          contentContainerStyle={{ height: 100 }}
+          scrollEnabled={false}
+          data={data}
+          renderItem={renderSpell}
+          keyExtractor={(item, index) => `draggable-item-${item.name}`}
+          onDragEnd={({ data }) => setData(data)}
+        />
       </View>
       <View style={{ flexDirection: "column", width: "50%" }}>
         <SettingsButton {...props} />

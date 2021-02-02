@@ -12,6 +12,7 @@ interface IProps {
   playerLocation: ILocation;
   location: ILocation;
   movementHandler: any;
+  playerDirection: DirectionEnum;
 }
 
 export enum DirectionEnum {
@@ -24,6 +25,7 @@ export enum DirectionEnum {
 export default function GameScreen(props: IProps) {
   const pan = useRef(new Animated.ValueXY()).current;
   const [playerLocation, setPlayerLocation] = useState({ x: 2, y: 3 });
+  const [playerDirection, setPlayerDirection] = useState(DirectionEnum.RIGHT);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -51,14 +53,16 @@ export default function GameScreen(props: IProps) {
         break;
       case DirectionEnum.RIGHT:
         setPlayerLocation({ ...playerLocation, x: playerLocation.x + 1 });
+        setPlayerDirection(DirectionEnum.RIGHT);
         break;
       case DirectionEnum.LEFT:
         setPlayerLocation({ ...playerLocation, x: playerLocation.x - 1 });
+        setPlayerDirection(DirectionEnum.LEFT);
         break;
     }
   }
 
-  props = { ...props, playerLocation, movementHandler };
+  props = { ...props, playerLocation, movementHandler, playerDirection };
 
   return (
     <View style={{ height: "100%", justifyContent: "space-between" }}>

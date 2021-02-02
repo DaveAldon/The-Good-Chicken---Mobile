@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
+import Player from "../player";
 
 interface IProps {
   playerLocation: ILocation;
@@ -13,7 +14,6 @@ interface ILocation {
 
 const boxArrays = Array.from(Array(10), () => [...Array(10).keys()]);
 const boxSize = 50;
-const playerSource = require("../../../assets/chicken.png");
 
 function checkSameLocation(loc1: ILocation, loc2: ILocation) {
   return loc1.x === loc2.x && loc1.y === loc2.y;
@@ -33,14 +33,10 @@ function calcBoxColor(location: ILocation) {
   }
 }
 
-function Player() {
-  return <Image style={{ resizeMode: "center", height: "100%", width: "100%" }} source={playerSource} />;
-}
-
 function Box(props: IProps) {
   const { playerLocation, location } = props;
   const isPlayerOnBox = checkSameLocation(playerLocation, location);
-  return <View style={{ backgroundColor: calcBoxColor(location), height: boxSize, width: boxSize }}>{isPlayerOnBox && <Player />}</View>;
+  return <View style={{ backgroundColor: calcBoxColor(location), height: boxSize, width: boxSize }}>{isPlayerOnBox && <Player {...props} />}</View>;
 }
 
 export default function BoxGrid(props: IProps) {
